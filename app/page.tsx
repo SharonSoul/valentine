@@ -8,7 +8,7 @@ import { useSwipeable } from "react-swipeable";
 const Page = () => {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false); // Added state for modal visibility
+  const [modalOpen, setModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
     "/images/next.svg",
@@ -67,7 +67,7 @@ const Page = () => {
           </div>
           <div className="flex rounded-full mx-auto bg-gradient-to-tr from-violet-400 to-green-400 p-1 shadow-lg max-w-240px my-4">
             <button
-              onClick={() => setModalOpen(true)} // Open the modal
+              onClick={() => setModalOpen(true)}
               className="flex-1 font-bold md:text-xl bg-white px-6 py-3 rounded-full"
             >
               Prompt Memories
@@ -131,7 +131,7 @@ const Page = () => {
                 <h3 className="text-3xl font-semibold">Memories</h3>
                 <button
                   className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                  onClick={() => setModalOpen(false)} // Close the modal
+                  onClick={() => setModalOpen(false)}
                 >
                   <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
                 </button>
@@ -149,6 +149,15 @@ const Page = () => {
                     transition={{ duration: 0.5 }}
                   />
                 </div>
+              </div>
+              <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-blueGray-200">
+                <button
+                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
