@@ -8,7 +8,6 @@ import { useSwipeable } from "react-swipeable";
 const Page = () => {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = [
     "/images/next.svg",
@@ -54,6 +53,11 @@ const Page = () => {
     onSwipedRight: handleSwipeRight
   });
 
+  const toggleModal = () => {
+    const modal = document.getElementById("modal");
+    modal.classList.toggle("hidden");
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen -mt-16">
       {yesPressed ? (
@@ -67,7 +71,7 @@ const Page = () => {
           </div>
           <div className="flex rounded-full mx-auto bg-gradient-to-tr from-violet-400 to-green-400 p-1 shadow-lg max-w-240px my-4">
             <button
-              onClick={() => setModalOpen(true)}
+              onClick={toggleModal}
               className="flex-1 font-bold md:text-xl bg-white px-6 py-3 rounded-full"
             >
               Prompt Memories
@@ -122,47 +126,45 @@ const Page = () => {
           </div>
         </>
       )}
-      {/* Image gallery */}
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-          <div className="relative w-auto max-w-3xl mx-auto my-6">
-            <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
-              <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
-                <h3 className="text-3xl font-semibold">Memories</h3>
-                <button
-                  className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                  onClick={() => setModalOpen(false)}
-                >
-                  <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
-                </button>
+      {/* Modal */}
+      <div id="modal" className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none hidden">
+        <div className="relative w-auto max-w-3xl mx-auto my-6">
+          <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
+            <div className="flex items-start justify-between p-5 border-b border-solid rounded-t border-blueGray-200">
+              <h3 className="text-3xl font-semibold">Memories</h3>
+              <button
+                className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                onClick={toggleModal}
+              >
+                <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">×</span>
+              </button>
+            </div>
+            <div className="relative p-6 flex-auto">
+              <div className="h-[200px]">
+                <motion.img
+                  src={images[currentIndex]}
+                  alt={`Image ${currentIndex + 1}`}
+                  className="h-full w-full object-cover"
+                  {...handlers}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                />
               </div>
-              <div className="relative p-6 flex-auto">
-                <div className="h-[200px]">
-                  <motion.img
-                    src={images[currentIndex]}
-                    alt={`Image ${currentIndex + 1}`}
-                    className="h-full w-full object-cover"
-                    {...handlers}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  />
-                </div>
-              </div>
-              <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-blueGray-200">
-                <button
-                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
-                  type="button"
-                  onClick={() => setModalOpen(false)}
-                >
-                  Close
-                </button>
-              </div>
+            </div>
+            <div className="flex items-center justify-end p-6 border-t border-solid rounded-b border-blueGray-200">
+              <button
+                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                type="button"
+                onClick={toggleModal}
+              >
+                Close
+              </button>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
